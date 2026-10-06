@@ -11,10 +11,14 @@ author_profile: true
 
 {% include base_path %}
 
+<div class="publications-list">
+
 <!-- New style rendering if publication categories are defined -->
 {% if site.publication_category %}
   {% for category in site.publication_category  %}
     {% assign title_shown = false %}
+    {% assign category_pubs = site.publications | where: "category", category[0] %}
+    {% assign next_number = category_pubs.size %}
     {% for post in site.publications reversed %}
       {% if post.category != category[0] %}
         {% continue %}
@@ -23,7 +27,10 @@ author_profile: true
         <h2>{{ category[1].title }}</h2><hr />
         {% assign title_shown = true %}
       {% endunless %}
+      {% assign pub_number = next_number %}
+      {% assign next_number = next_number | minus: 1 %}
       {% include archive-single.html %}
+      {% assign pub_number = nil %}
     {% endfor %}
   {% endfor %}
 {% else %}
@@ -32,5 +39,16 @@ author_profile: true
   {% endfor %}
 {% endif %}
 
+<!-- Presentations (entries live in _talks) -->
+{% if site.talks.size > 0 %}
+  <h2>Presentations</h2><hr />
+  {% assign next_number = site.talks.size %}
+  {% for post in site.talks reversed %}
+    {% assign talk_number = next_number %}
+    {% assign next_number = next_number | minus: 1 %}
+    {% include archive-single-talk.html %}
+    {% assign talk_number = nil %}
+  {% endfor %}
+{% endif %}
 
-
+</div>

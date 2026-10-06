@@ -11,3 +11,6 @@ end
 
 gem 'github-pages'
 gem 'connection_pool', '2.5.0'
+
+gem 'tzinfo-data', platforms: [:windows, :jruby]
+gem 'wdm', '~> 0.2', platforms: [:windows]

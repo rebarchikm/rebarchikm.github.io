@@ -14,6 +14,9 @@
 
 <div class="{{ include.type | default: "list" }}__item">
   <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    {% if post.collection == 'publications' and post.header.teaser %}
+      <img class="archive__item-thumb" src="{{ post.header.teaser | prepend: '/images/' | prepend: base_path }}" alt="">
+    {% endif %}
     {% if include.type == "grid" and teaser %}
       <div class="archive__item-teaser">
         <img src=
@@ -27,7 +30,9 @@
     {% endif %}
 
     <h2 class="archive__item-title" itemprop="headline">
-      {% if post.link %}
+      {% if post.collection == 'publications' and post.authors %}
+        {% if pub_number %}{{ pub_number }}. {% endif %}{{ title }}
+      {% elsif post.link %}
         <a href="{{ post.link }}">{{ title }}</a> <a href="{{ base_path }}{{ post.url }}" rel="permalink"><i class="fa fa-link" aria-hidden="true" title="permalink"></i><span class="sr-only">Permalink</span></a>
       {% else %}
         <a href="{{ base_path }}{{ post.url }}" rel="permalink">{{ title }}</a>
@@ -38,6 +43,10 @@
       <p class="page__meta"><i class="fa fa-clock" aria-hidden="true"></i> {% include read-time.html %}</p>
     {% endif %}
 
+    {% if post.collection == 'publications' and post.authors %}
+      <p class="archive__item-authors">{{ post.authors }}</p>
+      <p><i>{{ post.venue }}</i>{% if post.details %} {{ post.details }}{% endif %} ({{ post.date | date: "%Y" }}){% if post.doi %}<br />DOI: <a href="https://doi.org/{{ post.doi }}">{{ post.doi }}</a>{% endif %}</p>
+    {% else %}
         {% if post.collection == 'teaching' %}
           <p> {{ post.type }}, <i>{{ post.venue }}</i>, {{ post.date | default: "1900-01-01" | date: "%Y" }} </p>
         {% elsif post.collection == 'publications' %}
@@ -78,6 +87,8 @@
       <p><a href="{{ post.slidesurl }}">Download Slides</a></p>
     {% elsif post.bibtexurl %}
       <p><a href="{{ post.bibtexurl }}">Download Bibtex</a></p>
+    {% endif %}
+
     {% endif %}
 
   </article>

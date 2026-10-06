@@ -243,3 +243,57 @@
     }
   }
 }
+
+.archive__item-thumb {
+  float: right;
+  width: 34%;
+  max-width: 420px;
+  margin: 0.3em 0 0.75em 1.25em;
+  border-radius: $border-radius;
+}
+
+.list__item .archive__item::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+@media (max-width: 600px) {
+  .archive__item-thumb {
+    float: none;
+    display: block;
+    width: 100%;
+    margin: 0 0 0.75em 0;
+  }
+}
+
+/* Publications page: entry title size */
+.publications-list .archive__item-title {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+/* Titles there are plain text, so no underline on hover */
+.publications-list .archive__item:hover .archive__item-title {
+  text-decoration: none;
+}
+
+/* Gap between the author line and the journal/meeting line */
+.archive__item-authors {
+  margin-bottom: 0;
+}
+
+.archive__item-authors + p {
+  margin-top: 0;
+}
+
+/* Embedded CV viewer on the CV page */
+.cv-viewer {
+  display: block;
+  width: 100%;
+  height: 85vh;
+  min-height: 500px;
+  margin-bottom: 2em;
+  border: 1px solid var(--global-border-color);
+  border-radius: $border-radius;
+}
